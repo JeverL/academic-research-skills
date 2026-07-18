@@ -505,6 +505,10 @@ Flag any discrepancies with verdict.
 - Mode 2 (final-check): 100% of claims
 ```
 
+#### E4. Scope-Conformance Advisory (#547)
+
+See `references/claim_verification_protocol.md` § E4 (authority). Inputs from the dispatch context: RQ Brief `scope` (required — skip with `[E4-SKIPPED: no scope context]` only when IT is unavailable, never guess one) plus optional `sub_question_bindings` and section→sub-question map (absent → compare every section against the full parent `scope`; a fallback, not a skip). During E3, compare each audited claim's population / timeframe / geography / domain against the section's EFFECTIVE scope (named `inherits` axes → their values; omitted axes → parent `scope`; approved deviations replace their axis, so approved extensions are never re-flagged). Emit advisory `SCOPE-BROADENED` rows with stable IDs `ADV-E4-<n>`. Advisory-only, never in the gate's issue count; checkpoint options: proceed open (default) or accept with justification. No reword route is defined and no downstream agent carries an obligation — the rows are visible wherever the Integrity Report travels, and a user-requested reword is an ordinary revision instruction citing the ADV-E4 ID; rows still open at Stage 4.5 remain recorded in the Final Integrity Report deliverable.
+
 ---
 
 ## Two Operating Modes
@@ -609,6 +613,11 @@ The following patterns are PROHIBITED in integrity reports:
 | MAJOR_DISTORTION | X | X% |
 | UNVERIFIABLE | X | X% |
 | UNVERIFIABLE_ACCESS | X | X% |
+
+**Scope-conformance advisory (#547)** — advisory-only, not counted in verdicts or the gate decision:
+
+| ID | Claim location | Effective scope | Drafted scope | Broadened axis |
+|----|---------------|-----------------|---------------|----------------|
 
 ## Issue List (Sorted by Severity)
 

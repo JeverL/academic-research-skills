@@ -24,6 +24,18 @@ Verifies that quantitative and factual claims in the paper are accurately suppor
 - Check: exact numbers, date ranges, population descriptions, methodology descriptions
 - Flag any discrepancies
 
+## E4: Scope-Conformance Advisory (#547 — advisory-only)
+
+**Inputs**: the RQ Brief `scope` object (E4's one required input), plus two optional refinements — `sub_question_bindings` and the outline's section→sub-question map — carried in the integrity dispatch context per the pipeline handoff table (Stage 2→2.5 / Stage 4→4.5). SKIP E4 with `[E4-SKIPPED: no scope context]` ONLY when the parent `scope` object itself is unavailable (standalone runs with no RQ Brief) — never reconstruct or guess one. Absent bindings or section map (pre-#547 artifacts): compare every section's claims against the full parent `scope` — that is the documented fallback, not a skip.
+
+Compare each audited claim's population, timeframe, geography, and domain against the **effective scope** the claim's section inherits:
+
+1. Resolve the section's effective scope (section → serves sub-question → bindings; fall back to the whole `scope` object when no bindings exist). Axes named in `inherits` use those values; omitted axes inherit the parent `scope` value; each recorded user-approved deviation REPLACES the bound on its axis — so an already-approved extension is never re-flagged.
+2. Flag claims whose stated scope exceeds the effective scope on any axis as `SCOPE-BROADENED`, recording: claim location, effective scope, drafted scope, broadened axis.
+3. ADVISORY ONLY: `SCOPE-BROADENED` rows never change Phase E verdicts and never gate PASS/FAIL — they are not issues, do not enter the gate's issue count, and may remain open when the gate passes. Each row carries a stable ID `ADV-E4-<n>` and is recorded in the Integrity Report's advisory table. Checkpoint options per row: **proceed open** (default, recorded) or **accept the broadening** (with a note to justify it in the text; recorded). E4 defines no reword route and places no obligation on any downstream agent: a user who wants wording narrowed asks for it as an ordinary revision instruction in the normal flow — the advisory table is visible wherever the Integrity Report travels (it accompanies the Stage 2.5→3 handoff materials), so rows can be cited by their ADV-E4 IDs when doing so. Rows still open at Stage 4.5 simply remain recorded in the Final Integrity Report deliverable. No automatic rewriting, no new dispatch path.
+
+External motivation: Ren et al. (2026, arXiv:2607.13104 §5.1) — decomposition-based generation becomes vulnerable when sub-problems stop preserving the constraints of the original task (design inference: a drafted claim is the last link in that chain).
+
 ## Verdict Taxonomy
 
 | Verdict | Definition | Severity | Example |
